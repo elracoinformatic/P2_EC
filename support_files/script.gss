@@ -1,0 +1,14 @@
+#1. Afegir Proves
+#========================================
+
+
+# 2. Carregar programes en memòria
+# =======================================
+load Fetch.Imemo "echo.mem"
+load Mem.Dmemeo "echo.mem"
+
+# 3. Reset Inicial
+# =======================================
+set reset 1'b1
+clock +1
+set reset 1'b0
