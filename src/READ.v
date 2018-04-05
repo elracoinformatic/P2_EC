@@ -1,6 +1,6 @@
 //: version "1.8.7"
 
-module READ(Read_data_2, Read_register_2, Write_register, mux_RegDst, Read_register_1, Write_data, clk, Sign_ext_32, clr, Sign_ext_in, Read_data_1, RegWrite);
+module READ(Read_data_2, Read_register_2, Write_register, mux_RegDst, Read_register_1, Write_data, clk, Sign_ext_out, clr, Sign_ext_in, Read_data_1, RegWrite);
 //: interface  /sz:(255, 283) /bd:[ Ti0>RegWrite(135/255) Li0>Sign_ext_in[15:0](237/283) Li1>mux_RegDst(180/283) Li2>Write_register[4:0](151/283) Li3>Read_register_2[4:0](102/283) Li4>Read_register_1[4:0](50/283) Bi0>Write_data[31:0](20/255) Bi1>clr(144/255) Bi2>clk(89/255) Ro0<Sign_ext_out[31:0](250/283) Ro1<Read_data_2[31:0](162/283) Ro2<Read_data_1[31:0](53/283) ]
 output [31:0] Read_data_1;    //: /sn:0 /dp:1 {0}(483,82)(616,82)(616,83)(626,83){1}
 input [4:0] Write_register;    //: /sn:0 {0}(88,153)(170,153){1}
@@ -12,10 +12,10 @@ output [31:0] Read_data_2;    //: /sn:0 /dp:1 {0}(483,174)(561,174)(561,165)(571
 input [31:0] Write_data;    //: /sn:0 /dp:1 {0}(94,235)(242,235)(242,183)(334,183){1}
 input clr;    //: /sn:0 {0}(259,-43)(401,-43)(401,34){1}
 input RegWrite;    //: /sn:0 {0}(7,290)(375,290)(375,218){1}
-output [31:0] Sign_ext_32;    //: /sn:0 /dp:1 {0}(431,402)(608,402)(608,407)(618,407){1}
 input mux_RegDst;    //: /sn:0 {0}(94,210)(186,210)(186,166){1}
+output [31:0] Sign_ext_out;    //: /sn:0 /dp:1 {0}(420,408)(597,408)(597,407)(618,407){1}
 input clk;    //: /sn:0 {0}(452,330)(452,264)(443,264)(443,254){1}
-input [15:0] Sign_ext_in;    //: /sn:0 {0}(62,401)(316,401)(316,397)(326,397){1}
+input [15:0] Sign_ext_in;    //: /sn:0 {0}(62,401)(305,401)(305,403)(315,403){1}
 wire w7;    //: /sn:0 {0}(443,218)(443,238){1}
 wire [4:0] w3;    //: /sn:0 /dp:1 {0}(199,143)(334,143){1}
 //: enddecls
@@ -26,11 +26,11 @@ wire [4:0] w3;    //: /sn:0 /dp:1 {0}(199,143)(334,143){1}
   //: input g3 (Read_register_2) @(87,133) /sn:0 /w:[ 5 ]
   //: input g2 (Write_register) @(86,153) /sn:0 /w:[ 0 ]
   //: input g1 (mux_RegDst) @(92,210) /sn:0 /w:[ 0 ]
-  signextend g10 (.In(Sign_ext_in), .Out(Sign_ext_32));   //: @(327, 367) /sz:(103, 81) /sn:0 /p:[ Li0>1 Ro0<0 ]
+  signextend g10 (.In(Sign_ext_in), .Out(Sign_ext_out));   //: @(316, 373) /sz:(103, 81) /sn:0 /p:[ Li0>1 Ro0<0 ]
   //: input g6 (Read_register_1) @(81,67) /sn:0 /w:[ 0 ]
   //: input g7 (Write_data) @(92,235) /sn:0 /w:[ 0 ]
   //: input g9 (clk) @(452,332) /sn:0 /R:1 /w:[ 0 ]
-  //: output g12 (Sign_ext_32) @(615,407) /sn:0 /w:[ 1 ]
+  //: output g12 (Sign_ext_out) @(615,407) /sn:0 /w:[ 1 ]
   //: input g14 (clr) @(257,-43) /sn:0 /w:[ 0 ]
   //: input g11 (Sign_ext_in) @(60,401) /sn:0 /w:[ 0 ]
   //: joint g5 (Read_register_2) @(120, 133) /w:[ 2 1 4 -1 ]
@@ -381,20 +381,36 @@ wire [31:0] R10;    //: /sn:0 {0}(295,641)(295,600)(530,600){1}
 endmodule
 
 module main;    //: root_module
-wire [15:0] w6;    //: /sn:0 {0}(207,365)(217,365){1}
-wire w7;    //: /sn:0 {0}(353,117)(353,127){1}
-wire [31:0] Read_data_1;    //: /sn:0 {0}(484,181)(474,181){1}
-wire [4:0] w4;    //: /sn:0 {0}(207,279)(217,279){1}
-wire [31:0] w0;    //: /sn:0 /dp:1 {0}(484,290)(474,290){1}
-wire [4:0] w3;    //: /sn:0 {0}(207,230)(217,230){1}
-wire [31:0] w10;    //: /sn:0 {0}(238,422)(238,412){1}
-wire [31:0] w1;    //: /sn:0 {0}(484,378)(474,378){1}
-wire w8;    //: /sn:0 {0}(307,422)(307,412){1}
-wire [4:0] w2;    //: /sn:0 {0}(207,178)(217,178){1}
-wire w5;    //: /sn:0 {0}(207,308)(217,308){1}
-wire w9;    //: /sn:0 {0}(362,422)(362,412){1}
+wire [4:0] w6;    //: /sn:0 {0}(122,178)(216,178){1}
+wire w7;    //: /sn:0 {0}(305,564)(361,564)(361,412){1}
+wire [31:0] Read_data_1;    //: /sn:0 {0}(473,181)(525,181){1}
+wire [31:0] w3;    //: /sn:0 {0}(118,435)(237,435)(237,412){1}
+wire [31:0] w0;    //: /sn:0 {0}(473,290)(516,290){1}
+wire [4:0] w12;    //: /sn:0 {0}(124,230)(216,230){1}
+wire [31:0] w1;    //: /sn:0 {0}(473,378)(564,378){1}
+//: {2}(568,378)(648,378){3}
+//: {4}(566,380)(566,415){5}
+wire [15:0] w8;    //: /sn:0 {0}(128,365)(216,365){1}
+wire [4:0] w2;    //: /sn:0 {0}(126,279)(216,279){1}
+wire w11;    //: /sn:0 {0}(97,308)(216,308){1}
+wire w5;    //: /sn:0 {0}(243,38)(352,38)(352,127){1}
+wire w9;    //: /sn:0 {0}(165,540)(306,540)(306,412){1}
 //: enddecls
 
-  READ g0 (.RegWrite(w7), .Sign_ext_in(w6), .mux_RegDst(w5), .Write_register(w4), .Read_register_2(w3), .Read_register_1(w2), .Write_data(w10), .clr(w9), .clk(w8), .Sign_ext_out(w1), .Read_data_2(w0), .Read_data_1(Read_data_1));   //: @(218, 128) /sz:(255, 283) /sn:0 /p:[ Ti0>1 Li0>1 Li1>1 Li2>1 Li3>1 Li4>1 Bi0>1 Bi1>1 Bi2>1 Ro0<1 Ro1<1 Ro2<1 ]
+  //: dip g8 (w12) @(86,230) /sn:0 /R:1 /w:[ 0 ] /st:5
+  clock g4 (.Z(w9));   //: @(152,540) /sn:0 /w:[ 0 ] /omega:100 /phi:0 /duty:50
+  //: switch g3 (w7) @(288,564) /sn:0 /w:[ 0 ] /st:0
+  //: switch g2 (w5) @(226,38) /sn:0 /w:[ 0 ] /st:1
+  //: switch g1 (w11) @(80,308) /sn:0 /w:[ 0 ] /st:0
+  led g10 (.I(w1));   //: @(566,422) /sn:0 /R:2 /w:[ 5 ] /type:2
+  led g6 (.I(w1));   //: @(655,378) /sn:0 /R:3 /w:[ 3 ] /type:1
+  //: dip g9 (w2) @(88,279) /sn:0 /R:1 /w:[ 0 ] /st:5
+  //: dip g7 (w6) @(84,178) /sn:0 /R:1 /w:[ 0 ] /st:0
+  led g12 (.I(Read_data_1));   //: @(532,181) /sn:0 /R:3 /w:[ 1 ] /type:3
+  //: joint g11 (w1) @(566, 378) /w:[ 2 -1 1 4 ]
+  //: dip g14 (w3) @(80,435) /sn:0 /R:1 /w:[ 0 ] /st:15
+  //: dip g5 (w8) @(90,365) /sn:0 /R:1 /w:[ 0 ] /st:34643
+  READ g0 (.RegWrite(w5), .Sign_ext_in(w8), .mux_RegDst(w11), .Write_register(w2), .Read_register_2(w12), .Read_register_1(w6), .Write_data(w3), .clr(w7), .clk(w9), .Sign_ext_out(w1), .Read_data_2(w0), .Read_data_1(Read_data_1));   //: @(217, 128) /sz:(255, 283) /sn:0 /p:[ Ti0>1 Li0>1 Li1>1 Li2>1 Li3>1 Li4>1 Bi0>1 Bi1>1 Bi2>1 Ro0<0 Ro1<0 Ro2<0 ]
+  led g13 (.I(w0));   //: @(523,290) /sn:0 /R:3 /w:[ 1 ] /type:3
 
 endmodule
