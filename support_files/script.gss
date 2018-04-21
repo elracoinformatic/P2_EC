@@ -5,7 +5,7 @@
 # 2. Carregar programes en memòria
 # =======================================
 load Fetch.Imemo "echo.mem"
-load Mem.Dmemeo "echo.mem"
+load Mem.Dmemo "echo.mem"
 
 # 3. Reset Inicial
 # =======================================
