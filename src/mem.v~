@@ -1,7 +1,7 @@
 //: version "1.8.7"
 
-module MEM(MemRead, write_data, memWrite, read_data, Address);
-//: interface  /sz:(128, 174) /bd:[ Ti0>memWrite(62/128) Li0>write_data[31:0](112/174) Li1>Address[31:0](43/174) Bi0>MemRead(59/128) Ro0<read_data[31:0](35/174) ]
+module MEM(write_data, MemRead, memWrite, read_data, Address);
+//: interface  /sz:(128, 174) /bd:[ Ti0>memWrite(62/128) Li0>Address[31:0](43/174) Li1>write_data[31:0](112/174) Bi0>MemRead(59/128) Ro0<read_data[31:0](35/174) ]
 input [31:0] write_data;    //: /sn:0 {0}(316,166)(458,166)(458,192)(488,192){1}
 output [31:0] read_data;    //: /sn:0 /dp:1 {0}(504,192)(514,192)(514,247){1}
 //: {2}(516,249)(545,249){3}
@@ -20,42 +20,31 @@ wire w3;    //: /sn:0 {0}(391,386)(433,386)(433,276){1}
 wire w2;    //: /sn:0 {0}(332,310)(419,310)(419,276){1}
 //: enddecls
 
-  //: input g4 (MemRead) @(302,386) /sn:0 /w:[ 0 ]
   //: input g8 (write_data) @(314,166) /sn:0 /w:[ 0 ]
+  //: input g4 (MemRead) @(302,386) /sn:0 /w:[ 0 ]
   //: input g3 (memWrite) @(315,198) /sn:0 /w:[ 0 ]
   //: output g2 (read_data) @(542,249) /sn:0 /w:[ 3 ]
   //: input g1 (Address) @(377,251) /sn:0 /w:[ 0 ]
   not g10 (.I(MemRead), .Z(w3));   //: @(381,386) /sn:0 /w:[ 3 0 ]
   //: joint g6 (read_data) @(514, 249) /w:[ 2 1 4 -1 ]
-  nor g9 (.I0(memWrite), .I1(MemRead), .Z(w2));   //: @(322,310) /sn:0 /w:[ 9 5 0 ]
   not g7 (.I(memWrite), .Z(w4));   //: @(398,198) /sn:0 /w:[ 5 0 ]
+  nor g9 (.I0(memWrite), .I1(MemRead), .Z(w2));   //: @(322,310) /sn:0 /w:[ 9 5 0 ]
   //: joint g12 (MemRead) @(329, 382) /w:[ 2 4 -1 1 ]
-  bufif1 g5 (.Z(read_data), .I(write_data), .E(memWrite));   //: @(494,192) /sn:0 /w:[ 0 1 7 ]
   //: joint g11 (memWrite) @(331, 198) /w:[ 2 -1 1 8 ]
+  bufif1 g5 (.Z(read_data), .I(write_data), .E(memWrite));   //: @(494,192) /sn:0 /w:[ 0 1 7 ]
   ram g0 (.A(Address), .D(read_data), .WE(w4), .OE(w3), .CS(w2));   //: @(426,250) /sn:0 /w:[ 1 5 1 1 1 ]
   //: joint g13 (memWrite) @(381, 198) /w:[ 4 6 3 -1 ]
 
 endmodule
 
 module main;    //: root_module
-wire w6;    //: /sn:0 {0}(68,112)(68,49)(84,49)(84,39){1}
-//: {2}(86,37)(185,37)(185,119){3}
-//: {4}(82,37)(75,37){5}
-wire [31:0] w4;    //: /sn:0 {0}(252,155)(303,155){1}
-wire [31:0] w0;    //: /sn:0 {0}(24,232)(122,232){1}
-wire [31:0] w2;    //: /sn:0 {0}(11,163)(122,163){1}
-wire w5;    //: /sn:0 {0}(146,337)(182,337)(182,315){1}
-//: {2}(182,311)(182,295){3}
-//: {4}(180,313)(68,313)(68,128){5}
+wire [31:0] w4;    //: /sn:0 {0}(262,155)(252,155){1}
+wire w3;    //: /sn:0 {0}(182,305)(182,295){1}
+wire [31:0] w0;    //: /sn:0 {0}(112,163)(122,163){1}
+wire [31:0] w1;    //: /sn:0 {0}(112,232)(122,232){1}
+wire w2;    //: /sn:0 {0}(185,109)(185,119){1}
 //: enddecls
 
-  //: joint g4 (w5) @(182, 313) /w:[ -1 2 4 1 ]
-  //: joint g3 (w6) @(84, 37) /w:[ 2 -1 4 1 ]
-  not g2 (.I(w5), .Z(w6));   //: @(68,122) /sn:0 /R:1 /w:[ 5 0 ]
-  //: switch g1 (w5) @(129,337) /sn:0 /w:[ 0 ] /st:0
-  //: dip g6 (w0) @(-14,232) /sn:0 /R:1 /w:[ 0 ] /st:0
-  led g7 (.I(w4));   //: @(310,155) /sn:0 /R:3 /w:[ 1 ] /type:2
-  //: dip g5 (w2) @(-27,163) /sn:0 /R:1 /w:[ 0 ] /st:0
-  MEM g0 (.memWrite(w6), .write_data(w0), .Address(w2), .MemRead(w5), .read_data(w4));   //: @(123, 120) /sz:(128, 174) /sn:0 /p:[ Ti0>3 Li0>1 Li1>1 Bi0>3 Ro0<0 ]
+  MEM g0 (.memWrite(w2), .write_data(w1), .Address(w0), .MemRead(w3), .read_data(w4));   //: @(123, 120) /sz:(128, 174) /sn:0 /p:[ Ti0>1 Li0>1 Li1>1 Bi0>1 Ro0<1 ]
 
 endmodule
